@@ -1,14 +1,17 @@
 {
   "name": "homebridge-switchbot-k10plus-vacuum",
-  "version": "1.0.1",
+  "displayName": "SwitchBot K10+ Vacuum",
+  "version": "1.0.2",
   "description": "homebridge plugin for switchbot k10+ vacuum with master clean and room scene switches",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
     "homebridge": ">=1.7.0",
     "node": ">=18.0.0"
   },
   "keywords": [
     "homebridge-plugin",
+    "homebridge-platform",
     "switchbot",
     "vacuum",
     "k10+",
@@ -24,6 +27,10 @@
   },
   "scripts": {
     "build": "esbuild index.ts --bundle --platform=node --format=cjs --external:homebridge --outfile=dist/index.js",
-    "prepare": "npm run build"
-  }
+    "prepare": "npm run build",
+    "prepack": "npm run build"
+  },
+  "files": [
+    "dist"
+  ]
 }
