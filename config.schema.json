@@ -1,0 +1,50 @@
+{
+  "pluginAlias": "SwitchBotK10PlusVacuum",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "default": "SwitchBot K10+ Vacuum"
+      },
+      "token": {
+        "type": "string",
+        "title": "SwitchBot API Token"
+      },
+      "secret": {
+        "type": "string",
+        "title": "SwitchBot API Secret"
+      },
+      "deviceId": {
+        "type": "string",
+        "title": "Device ID",
+        "default": "360TY420703040884"
+      },
+      "rooms": {
+        "type": "array",
+        "title": "Room Scenes",
+        "default": [],
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Room Name"
+            },
+            "sceneId": {
+              "type": "string",
+              "title": "Scene ID"
+            }
+          },
+          "required": ["name", "sceneId"]
+        }
+      }
+    },
+    "required": ["token", "secret", "deviceId"],
+    "additionalProperties": false
+  }
+}
