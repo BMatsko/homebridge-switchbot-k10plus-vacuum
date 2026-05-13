@@ -12,82 +12,12 @@ This plugin exposes SwitchBot K10+ actions to Apple Home as HomeKit switches. It
 
 > Apple Home/Homebridge does not expose this plugin as a native vacuum tile. The controls are represented as switches and status services because the classic HomeKit services available to Homebridge do not provide a complete robot-vacuum service.
 
-
-## Installation
-
-### Homebridge UI
-
-The easiest Homebridge UI installation path is available after this package is published to the npm registry. Search for `homebridge-switchbot-k10plus-vacuum` in Homebridge UI and install it like any other Homebridge plugin.
-
-If Homebridge UI reports that the package cannot be found, the package has not been published to npm yet. In that case, install it from the terminal using one of the options below.
-
-### Terminal install from npm
-
-After the package is published to npm:
-
-```sh
-npm install -g homebridge-switchbot-k10plus-vacuum
-```
-
-### Terminal install from GitHub
-
-You can deploy without publishing to npm by installing directly from the GitHub repository on the machine that runs Homebridge:
-
-```sh
-npm install -g github:poke/homebridge-switchbot-k10plus-vacuum
-```
-
-You can also use the full git URL if your npm version or environment does not resolve the GitHub shorthand:
-
-```sh
-npm install -g git+https://github.com/poke/homebridge-switchbot-k10plus-vacuum.git
-```
-
-The package includes a committed `dist/index.js` build for normal installs and a `prepare` script so git installs can rebuild `dist/index.js` when npm installs from the repository.
-
-### Terminal install from a local tarball
-
-For fully local installs, build a tarball and copy it to the Homebridge host:
-
-```sh
-git clone https://github.com/poke/homebridge-switchbot-k10plus-vacuum.git
-cd homebridge-switchbot-k10plus-vacuum
-npm install
-npm run build
-npm pack
-npm install -g ./homebridge-switchbot-k10plus-vacuum-1.0.2.tgz
-```
-
-Restart Homebridge after installing from GitHub or a tarball so Homebridge can discover the plugin. If Homebridge is running in Docker, run the install command inside the Homebridge container or bake the tarball/GitHub install into your container image.
-
 ## Requirements
 
 - Homebridge `1.7.0` or newer.
 - Node.js `18.0.0` or newer.
 - A SwitchBot OpenAPI token and secret.
 - The SwitchBot device ID for your K10+ vacuum.
-
-
-## Homebridge discovery troubleshooting
-
-If you installed from the terminal but Homebridge does not show the plugin, check these common causes:
-
-1. **Wrong install location:** Homebridge only discovers plugins installed in the Node/npm environment used by the Homebridge service. Compare `which homebridge`, `npm root -g`, and the npm prefix used by your Homebridge service.
-2. **Docker installs:** If Homebridge runs in Docker, installing on the host OS is not enough. Install the plugin inside the container or add the install command to the image/container startup flow.
-3. **Homebridge was not restarted:** Restart Homebridge after installing so the plugin manager reloads global packages.
-4. **Missing platform config:** Add an entry under `platforms` with `"platform": "SwitchBotK10PlusVacuum"`. Homebridge will not instantiate the platform from install alone.
-5. **Git install build failed:** For GitHub installs, check the terminal output for `prepare`/`npm run build` failures. A successful install should contain `dist/index.js`.
-6. **Look for the registration log:** On startup, Homebridge should log a platform registration for `homebridge-switchbot-k10plus-vacuum.SwitchBotK10PlusVacuum`. If that line is missing, Homebridge did not load the package from its plugin search path.
-
-Useful commands on the Homebridge host are:
-
-```sh
-npm root -g
-npm list -g --depth=0 | grep homebridge-switchbot-k10plus-vacuum
-homebridge -D
-```
-
-If you use `hb-service`, also check the service logs after restarting Homebridge.
 
 ## Configuration
 
