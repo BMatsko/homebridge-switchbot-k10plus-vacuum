@@ -94,6 +94,24 @@ SwitchBot applies API rate limits, so avoid setting `pollIntervalSeconds` too lo
 
 ## Troubleshooting
 
+### Install fails with `git dep preparation failed` or `ENOTDIR`
+
+Version `1.0.3` briefly added an npm `prepare` script. On some Homebridge/npm installs, especially when installing from a Git URL, npm runs `prepare` as a nested install step and can fail before Homebridge gets the plugin. Version `1.0.4` removes that install-time prepare step and ships the rebuilt `dist` bundle directly.
+
+If npm also reports `ENOTDIR: not a directory, rename .../node_modules/homebridge-switchbot-k10plus-vacuum`, remove the broken existing install path and reinstall the plugin:
+
+```sh
+sudo rm -rf /usr/local/lib/node_modules/homebridge-switchbot-k10plus-vacuum
+sudo npm install -g homebridge-switchbot-k10plus-vacuum
+```
+
+If you see repeated `TAR_ENTRY_ERROR ENOENT` warnings under `.../homebridge-switchbot-k10plus-vacuum/node_modules/@matter/...`, npm is trying to install Homebridge and its Matter dependencies inside this plugin. Version `1.0.5` removes the Homebridge peer dependency so npm does not auto-install a nested Homebridge copy for the plugin.
+
+If a Git install fails with `sh: esbuild: command not found` while running `npm run build`, npm is running package lifecycle scripts in the cloned Git dependency before dev tools are available. Version `1.0.6` removes publish/install lifecycle scripts entirely; the committed `dist` bundle is used directly during install.
+
+If your Homebridge uses a different global npm prefix, replace `/usr/local/lib/node_modules` with the path shown in the npm error.
+
+
 ### Commands do nothing
 
 Check the Homebridge log. The plugin validates HTTP failures and SwitchBot API errors and logs the reason when a command or status refresh fails.
