@@ -57,7 +57,7 @@ const CLEANING_STATUSES = new Set(['Cleaning', 'Clearing', 'Working', 'Running']
 const CHARGING_STATUSES = new Set(['Charging', 'FullyCharged']);
 
 export = (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, SwitchBotK10PlusVacuumPlatform);
+  api.registerPlatform(PLUGIN_IDENTIFIER, PLATFORM_NAME, SwitchBotK10PlusVacuumPlatform);
 };
 
 class SwitchBotK10PlusVacuumPlatform implements DynamicPlatformPlugin {
