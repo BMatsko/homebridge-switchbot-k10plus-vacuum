@@ -21,12 +21,53 @@
       },
       "deviceId": {
         "type": "string",
-        "title": "Device ID",
-        "default": "360TY420703040884"
+        "title": "Device ID"
+      },
+      "enableStopSwitch": {
+        "type": "boolean",
+        "title": "Expose Stop Switch",
+        "default": true
+      },
+      "enableDockSwitch": {
+        "type": "boolean",
+        "title": "Expose Return to Dock Switch",
+        "default": true
+      },
+      "pollIntervalSeconds": {
+        "type": "integer",
+        "title": "Status Poll Interval (seconds)",
+        "description": "How often to refresh battery, online, and cleaning status from SwitchBot. Values below 60 seconds are raised to 60 seconds to reduce API usage.",
+        "default": 300,
+        "minimum": 60
+      },
+      "powerLevels": {
+        "type": "array",
+        "title": "Power Level Switches",
+        "default": [],
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Switch Name"
+            },
+            "value": {
+              "type": "integer",
+              "title": "SwitchBot PowLevel Value",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "name",
+            "value"
+          ],
+          "additionalProperties": false
+        }
       },
       "rooms": {
         "type": "array",
         "title": "Room Scenes",
+        "description": "Room cleaning is implemented by executing manual SwitchBot scenes created in the SwitchBot app.",
         "default": [],
         "items": {
           "type": "object",
@@ -40,11 +81,19 @@
               "title": "Scene ID"
             }
           },
-          "required": ["name", "sceneId"]
+          "required": [
+            "name",
+            "sceneId"
+          ],
+          "additionalProperties": false
         }
       }
     },
-    "required": ["token", "secret", "deviceId"],
+    "required": [
+      "token",
+      "secret",
+      "deviceId"
+    ],
     "additionalProperties": false
   }
 }
