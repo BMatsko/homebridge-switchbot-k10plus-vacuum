@@ -1,7 +1,7 @@
 {
   "name": "homebridge-switchbot-k10plus-vacuum",
   "displayName": "SwitchBot K10+ Vacuum",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Homebridge plugin for SwitchBot K10+ vacuum controls with status polling and room scene switches",
   "main": "dist/index.js",
   "engines": {
