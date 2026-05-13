@@ -201,8 +201,11 @@ class SwitchBotK10PlusVacuumPlatform implements DynamicPlatformPlugin {
           return;
         }
 
-        await this.handleSwitchOn(kind, options);
-        setTimeout(() => service.updateCharacteristic(this.Characteristic.On, false), 1000);
+        try {
+          await this.handleSwitchOn(kind, options);
+        } finally {
+          setTimeout(() => service.updateCharacteristic(this.Characteristic.On, false), 1000);
+        }
       });
   }
 
