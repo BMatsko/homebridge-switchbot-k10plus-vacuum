@@ -98,12 +98,16 @@ SwitchBot applies API rate limits, so avoid setting `pollIntervalSeconds` too lo
 
 Version `1.0.3` briefly added an npm `prepare` script. On some Homebridge/npm installs, especially when installing from a Git URL, npm runs `prepare` as a nested install step and can fail before Homebridge gets the plugin. Version `1.0.4` removes that install-time prepare step and ships the rebuilt `dist` bundle directly.
 
-If npm also reports `ENOTDIR: not a directory, rename .../node_modules/homebridge-switchbot-k10plus-vacuum`, remove the broken existing install path and reinstall the plugin:
+If npm reports `ENOTDIR: not a directory, rename .../node_modules/homebridge-switchbot-k10plus-vacuum`, npm is failing before this plugin's code runs because the existing global install path is corrupted or is not a directory. Remove the broken target path and any temporary rename left behind, then reinstall:
 
 ```sh
-sudo rm -rf /usr/local/lib/node_modules/homebridge-switchbot-k10plus-vacuum
-sudo npm install -g homebridge-switchbot-k10plus-vacuum
+PREFIX="$(npm -g prefix)"
+sudo rm -rf "$PREFIX/lib/node_modules/homebridge-switchbot-k10plus-vacuum"
+sudo rm -rf "$PREFIX/lib/node_modules/.homebridge-switchbot-k10plus-vacuum-"*
+sudo npm install -g git+https://github.com/BMatsko/homebridge-switchbot-k10plus-vacuum.git
 ```
+
+If you are installing from npm instead of GitHub, use `sudo npm install -g homebridge-switchbot-k10plus-vacuum` for the last command.
 
 If you see repeated `TAR_ENTRY_ERROR ENOENT` warnings under `.../homebridge-switchbot-k10plus-vacuum/node_modules/@matter/...`, npm is trying to install Homebridge and its Matter dependencies inside this plugin. Version `1.0.5` removes the Homebridge peer dependency so npm does not auto-install a nested Homebridge copy for the plugin.
 
