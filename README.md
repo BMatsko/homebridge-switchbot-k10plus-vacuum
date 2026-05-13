@@ -115,6 +115,24 @@ If a Git install fails with `sh: esbuild: command not found` while running `npm 
 
 If your Homebridge uses a different global npm prefix, replace `/usr/local/lib/node_modules` with the path shown in the npm error.
 
+### Installed successfully but not visible in Homebridge UI
+
+If you installed from GitHub with `npm install -g git+https://github.com/BMatsko/homebridge-switchbot-k10plus-vacuum.git`, the package will not appear in the Homebridge UI plugin search results because that search is backed by the npm registry. It should appear under installed plugins after Homebridge reloads its plugin list.
+
+After a successful terminal install, restart Homebridge and refresh the UI:
+
+```sh
+sudo hb-service restart
+```
+
+If it still does not show as installed, confirm Homebridge is using the same global plugin directory that npm installed into:
+
+```sh
+npm root -g
+homebridge -P "$(npm root -g)" -D
+```
+
+The Homebridge startup log should include `Loaded plugin: homebridge-switchbot-k10plus-vacuum` and `Registering platform 'homebridge-switchbot-k10plus-vacuum.SwitchBotK10PlusVacuum'`. If those lines appear, add the platform configuration with `"platform": "SwitchBotK10PlusVacuum"` in the Homebridge UI config editor or directly in `config.json`.
 
 ### Commands do nothing
 
