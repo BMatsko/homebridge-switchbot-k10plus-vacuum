@@ -270,5 +270,5 @@ var SwitchBotK10PlusVacuumPlatform = class {
   }
 };
 module.exports = (api) => {
-  api.registerPlatform(PLATFORM_NAME, SwitchBotK10PlusVacuumPlatform);
+  api.registerPlatform(PLUGIN_IDENTIFIER, PLATFORM_NAME, SwitchBotK10PlusVacuumPlatform);
 };
