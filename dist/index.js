@@ -134,8 +134,11 @@ var SwitchBotK10PlusVacuumPlatform = class {
       if (!value) {
         return;
       }
-      await this.handleSwitchOn(kind, options);
-      setTimeout(() => service.updateCharacteristic(this.Characteristic.On, false), 1e3);
+      try {
+        await this.handleSwitchOn(kind, options);
+      } finally {
+        setTimeout(() => service.updateCharacteristic(this.Characteristic.On, false), 1e3);
+      }
     });
   }
   configureStatusServices(accessory) {
