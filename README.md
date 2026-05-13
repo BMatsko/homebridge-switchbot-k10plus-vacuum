@@ -105,6 +105,8 @@ sudo rm -rf /usr/local/lib/node_modules/homebridge-switchbot-k10plus-vacuum
 sudo npm install -g homebridge-switchbot-k10plus-vacuum
 ```
 
+If you see repeated `TAR_ENTRY_ERROR ENOENT` warnings under `.../homebridge-switchbot-k10plus-vacuum/node_modules/@matter/...`, npm is trying to install Homebridge and its Matter dependencies inside this plugin. Version `1.0.5` removes the Homebridge peer dependency so npm does not auto-install a nested Homebridge copy for the plugin.
+
 If your Homebridge uses a different global npm prefix, replace `/usr/local/lib/node_modules` with the path shown in the npm error.
 
 
